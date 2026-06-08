@@ -4,7 +4,6 @@
   "description": "Pro Studio - Advanced Media Editing Suite",
   "author": "GR Studios",
   "version": "1.0.0",
-  "type": "module",
   "main": "electron/main.js",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
@@ -28,7 +27,7 @@
         "nsis",
         "portable"
       ],
-      "icon": "public/icons/icon.ico"
+      "icon": "public/icons/favicon.ico"
     },
     "nsis": {
       "oneClick": false,
