@@ -246,10 +246,6 @@ You may:
 
 ---
 
-# License
-
-Please review the included license file before redistributing modified versions.
-
 ## License
 
 This project is licensed under the MIT License.
@@ -267,7 +263,7 @@ Provided that the original MIT License and copyright notice remain included in r
 
 See the LICENSE file for full details.
 
-Copyright © 2026 GR Studios
+Copyright © 2026 GR Studios AI
 
 
 
