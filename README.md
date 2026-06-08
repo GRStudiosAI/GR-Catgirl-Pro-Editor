@@ -250,6 +250,24 @@ You may:
 
 Please review the included license file before redistributing modified versions.
 
+## License
+
+This project is licensed under the MIT License.
+
+You are free to:
+
+* Use
+* Modify
+* Distribute
+* Fork
+* Create your own versions
+* Use commercially
+
+Provided that the original MIT License and copyright notice remain included in redistributed copies.
+
+See the LICENSE file for full details.
+
+Copyright © 2026 GR Studios
 
 
 
