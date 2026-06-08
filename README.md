@@ -41,7 +41,7 @@ https://git-scm.com
 # Clone The Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/REPOSITORY_NAME.git
+git clone https://github.com/GRStudiosAI/GR-Catgirl-Pro-Editor.git
 ```
 
 Enter the project directory:
