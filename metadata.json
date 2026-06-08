@@ -1,0 +1,6 @@
+{
+  "name": "Pro Studio",
+  "description": "Professional-grade local media workstation featuring multi-track video timeline, audio production suite, and advanced image editing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
