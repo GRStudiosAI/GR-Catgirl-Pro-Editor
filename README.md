@@ -1,6 +1,6 @@
 # GR Catgirl Editor
 
-A custom GR Studios creative editing platform featuring a cyberpunk-inspired interface, media tools, asset management, and future AI-powered content creation features.
+A custom GR Studios AI creative editing platform featuring a cyberpunk-inspired interface, media tools, asset management, and future AI-powered content creation features.
 
 ---
 
