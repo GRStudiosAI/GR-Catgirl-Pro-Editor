@@ -1,3 +1,5 @@
+import Cropper from "cropperjs";
+import "cropperjs/dist/cropper.css";
 
 export function render() {
     return `
@@ -13,10 +15,10 @@ export function render() {
                     <span class="font-bold tracking-tight text-[#e0a6ff]">PIXL STUDIO PRO</span>
                 </div>
                 <div class="flex items-center gap-3">
-                    <button id="img-undo" class="p-1.5 hover:bg-white/10 rounded disabled:opacity-30"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 10h10a8 8 0 018 8v2M3 10l5 5m-5-5l5-5"></path></svg></button>
-                    <button id="img-redo" class="p-1.5 hover:bg-white/10 rounded disabled:opacity-30"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 10H11a8 8 0 00-8 8v2m18-10l-5 5m5-5l-5-5"></path></svg></button>
+                    <button id="img-undo" class="p-1.5 hover:bg-white/10 rounded disabled:opacity-30 cursor-pointer" title="Undo"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 10h10a8 8 0 018 8v2M3 10l5 5m-5-5l5-5"></path></svg></button>
+                    <button id="img-redo" class="p-1.5 hover:bg-white/10 rounded disabled:opacity-30 cursor-pointer" title="Redo"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 10H11a8 8 0 00-8 8v2m18-10l-5 5m5-5l-5-5"></path></svg></button>
                     <div class="w-[1px] h-4 bg-white/10 mx-1"></div>
-                    <button id="img-save-btn" class="px-4 py-1 bg-[#9d00ff] hover:bg-[#ff009d] text-xs font-bold rounded transition-all shadow-[0_0_10px_rgba(157,0,255,0.3)]">
+                    <button id="img-save-btn" class="px-4 py-1 bg-[#9d00ff] hover:bg-[#ff009d] text-xs font-bold rounded transition-all shadow-[0_0_10px_rgba(157,0,255,0.3)] cursor-pointer">
                         SAVE / EXPORT
                     </button>
                 </div>
@@ -25,24 +27,27 @@ export function render() {
             <div class="flex-1 flex overflow-hidden">
                 <!-- Left Sidebar: Main Tools -->
                 <div class="w-16 border-r border-[#9d00ff]/20 bg-[#0A0010] flex flex-col items-center py-4 gap-4">
-                    <button class="tool-btn active" data-tool="arrange" title="Arrange & Resize">
+                    <button class="tool-btn active cursor-pointer" data-tool="arrange" title="Arrange & Resize">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
                     </button>
-                    <button class="tool-btn" data-tool="cutout" title="Cutout & Background Removal">
+                    <button class="tool-btn cursor-pointer" data-tool="crop" title="Crop Canvas">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 2v14h14M16 22V8H2M1 5h3m15 0h4m-4 14h4M1 19h3"></path></svg>
+                    </button>
+                    <button class="tool-btn cursor-pointer" data-tool="cutout" title="Cutout & Background Removal">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758L12 12m0 0l2.879 2.879M12 12l2.879-2.879"></path></svg>
                     </button>
-                    <button class="tool-btn" data-tool="adjust" title="Adjust & Color">
+                    <button class="tool-btn cursor-pointer" data-tool="adjust" title="Adjust & Color">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
                     </button>
-                    <button class="tool-btn" data-tool="filter" title="Filters & Effects">
+                    <button class="tool-btn cursor-pointer" data-tool="filter" title="Filters & Effects">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
                     </button>
-                    <button class="tool-btn" data-tool="retouch" title="Retouch & Heal">
+                    <button class="tool-btn cursor-pointer" data-tool="retouch" title="Retouch & Heal">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                     </button>
                     
                     <div class="mt-auto flex flex-col gap-4">
-                        <button id="img-load-btn" class="p-2 border border-[#9d00ff]/30 rounded-lg hover:bg-[#9d00ff]/20 relative">
+                        <button id="img-load-btn" class="p-2 border border-[#9d00ff]/30 rounded-lg hover:bg-[#9d00ff]/20 relative cursor-pointer" title="Load Local Image">
                             <svg class="w-6 h-6 text-[#e0a6ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"></path></svg>
                             <input type="file" id="img-input" class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" />
                         </button>
@@ -52,34 +57,57 @@ export function render() {
                 <!-- Tool Panel: Sub-options -->
                 <div class="w-64 border-r border-[#9d00ff]/20 bg-[#0A0010] flex flex-col overflow-y-auto">
                     <div class="p-4" id="tool-settings-container">
-                        <!-- Settings injected here based on tool -->
+                        <!-- Settings: Arrange & Resize -->
                         <div id="settings-arrange" class="space-y-6">
-                            <h4 class="text-xs font-bold text-[#b388ff] uppercase tracking-wider">Canvas Size</h4>
+                            <h4 class="text-xs font-bold text-[#b388ff] uppercase tracking-wider">Canvas Resize</h4>
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label class="text-[10px] text-white/40 block mb-1">Width</label>
-                                    <input type="number" id="img-width" class="w-full bg-[#160024] border border-[#9d00ff]/20 rounded p-1.5 text-xs text-white" value="1080">
+                                    <label class="text-[10px] text-white/40 block mb-1">Width (px)</label>
+                                    <input type="number" id="img-width" class="w-full bg-[#160024] border border-[#9d00ff]/20 rounded p-1.5 text-xs text-white focus:outline-none focus:border-[#9d00ff]" value="1080">
                                 </div>
                                 <div>
-                                    <label class="text-[10px] text-white/40 block mb-1">Height</label>
-                                    <input type="number" id="img-height" class="w-full bg-[#160024] border border-[#9d00ff]/20 rounded p-1.5 text-xs text-white" value="1080">
+                                    <label class="text-[10px] text-white/40 block mb-1">Height (px)</label>
+                                    <input type="number" id="img-height" class="w-full bg-[#160024] border border-[#9d00ff]/20 rounded p-1.5 text-xs text-white focus:outline-none focus:border-[#9d00ff]" value="1080">
                                 </div>
                             </div>
                             <div class="flex items-center gap-2">
                                 <input type="checkbox" id="img-constrain" checked class="accent-[#9d00ff]">
-                                <label class="text-[10px] text-white/60">Lock Aspect Ratio</label>
+                                <label class="text-[10px] text-white/60 cursor-pointer select-none" for="img-constrain">Lock Aspect Ratio</label>
                             </div>
-                            <button class="w-full py-2 bg-[#160024] border border-[#9d00ff]/30 rounded text-[10px] font-bold hover:bg-[#9d00ff]/20 transition-all uppercase">Apply Size</button>
+                            <button id="img-apply-size-btn" class="w-full py-2 bg-[#160024] border border-[#9d00ff]/30 rounded text-[10px] font-bold hover:bg-[#9d00ff]/20 transition-all uppercase cursor-pointer">Apply Resize</button>
                         </div>
                         
+                        <!-- Settings: Crop Tool -->
+                        <div id="settings-crop" class="space-y-6 hidden">
+                            <h4 class="text-xs font-bold text-[#b388ff] uppercase tracking-wider">Crop Tool</h4>
+                            <div class="space-y-3">
+                                <label class="text-[10px] text-white/40 block">Aspect Ratio</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button class="crop-aspect-btn active py-1.5 bg-[#160024] border border-white/10 rounded text-[10px] font-bold hover:border-[#9d00ff] cursor-pointer" data-ratio="free">FREE</button>
+                                    <button class="crop-aspect-btn py-1.5 bg-[#160024] border border-white/10 rounded text-[10px] font-bold hover:border-[#9d00ff] cursor-pointer" data-ratio="1">1:1 (SQUARE)</button>
+                                    <button class="crop-aspect-btn py-1.5 bg-[#160024] border border-white/10 rounded text-[10px] font-bold hover:border-[#9d00ff] cursor-pointer" data-ratio="1.777">16:9</button>
+                                    <button class="crop-aspect-btn py-1.5 bg-[#160024] border border-white/10 rounded text-[10px] font-bold hover:border-[#9d00ff] cursor-pointer" data-ratio="1.333">4:3</button>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button id="img-crop-confirm-btn" class="flex-1 py-2 bg-gradient-to-r from-[#9d00ff] to-[#ff009d] rounded text-[10px] font-bold hover:opacity-90 transition-all uppercase shadow-[0_0_10px_rgba(157,0,255,0.3)] cursor-pointer">
+                                    Apply Crop
+                                </button>
+                                <button id="img-crop-cancel-btn" class="flex-1 py-2 bg-[#160024] border border-white/10 rounded text-[10px] font-bold hover:bg-white/5 transition-all uppercase cursor-pointer">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Settings: Cutout -->
                         <div id="settings-cutout" class="space-y-6 hidden">
                             <h4 class="text-xs font-bold text-[#b388ff] uppercase tracking-wider">Removal Tools</h4>
                             <div class="grid grid-cols-2 gap-2">
-                                <button class="cutout-type active p-3 bg-[#160024] border border-white/10 rounded flex flex-col items-center gap-2 hover:border-[#9d00ff]" data-type="lasso">
+                                <button class="cutout-type active p-3 bg-[#160024] border border-white/10 rounded flex flex-col items-center gap-2 hover:border-[#9d00ff] cursor-pointer" data-type="lasso">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"></path></svg>
                                     <span class="text-[8px]">MAGIC WAND</span>
                                 </button>
-                                <button class="cutout-type p-3 bg-[#160024] border border-white/10 rounded flex flex-col items-center gap-2 hover:border-[#9d00ff]" data-type="eraser">
+                                <button class="cutout-type p-3 bg-[#160024] border border-white/10 rounded flex flex-col items-center gap-2 hover:border-[#9d00ff] cursor-pointer" data-type="eraser">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                     <span class="text-[8px]">ERASER</span>
                                 </button>
@@ -88,11 +116,12 @@ export function render() {
                                 <label class="text-[10px] text-white/40 block mb-2">Tolerance / Size</label>
                                 <input type="range" id="cutout-size" class="w-full accent-[#9d00ff]" min="1" max="100" value="30">
                             </div>
-                            <button id="img-rm-bg" class="w-full py-3 bg-gradient-to-r from-[#9d00ff]/20 to-[#ff009d]/20 border border-[#9d00ff]/50 rounded text-[10px] font-bold hover:from-[#9d00ff]/40 hover:to-[#ff009d]/40 transition-all uppercase">
+                            <button id="img-rm-bg" class="w-full py-3 bg-gradient-to-r from-[#9d00ff]/20 to-[#ff009d]/20 border border-[#9d00ff]/50 rounded text-[10px] font-bold hover:from-[#9d00ff]/40 hover:to-[#ff009d]/40 transition-all uppercase cursor-pointer">
                                 AI Background Remove
                             </button>
                         </div>
 
+                        <!-- Settings: Adjust -->
                         <div id="settings-adjust" class="space-y-6 hidden">
                              <h4 class="text-xs font-bold text-[#b388ff] uppercase tracking-wider">Color & Light</h4>
                              <div class="space-y-4">
@@ -138,6 +167,10 @@ export function render() {
                         <div class="relative bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] shadow-[0_0_100px_rgba(0,0,0,0.8)]" id="canvas-container">
                              <canvas id="main-canvas"></canvas>
                              <canvas id="ui-canvas" class="absolute inset-0 pointer-events-none"></canvas>
+                             <!-- Cropper Wrapper Overlay -->
+                             <div id="cropper-wrapper" class="absolute inset-0 hidden z-10 bg-black/40 overflow-hidden flex items-center justify-center">
+                                 <img id="crop-target-img" class="max-w-full max-h-full block" />
+                             </div>
                         </div>
                     </div>
 
@@ -147,9 +180,9 @@ export function render() {
                             <span class="text-[9px] font-mono text-[#00ffcc]" id="img-dim-display">1080 x 1080 px</span>
                          </div>
                          <div class="flex items-center gap-3">
-                             <button id="zoom-out" class="p-1 hover:text-white transition-colors text-white/40"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 12H4"></path></svg></button>
+                             <button id="zoom-out" class="p-1 hover:text-white transition-colors text-white/40 cursor-pointer"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 12H4"></path></svg></button>
                              <span id="zoom-percent" class="text-[10px] font-mono w-10 text-center">100%</span>
-                             <button id="zoom-in" class="p-1 hover:text-white transition-colors text-white/40"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"></path></svg></button>
+                             <button id="zoom-in" class="p-1 hover:text-white transition-colors text-white/40 cursor-pointer"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"></path></svg></button>
                          </div>
                     </div>
                 </div>
@@ -184,8 +217,23 @@ export function render() {
                 border-color: #9d00ff;
                 background: rgba(157, 0, 255, 0.1);
             }
+            .crop-aspect-btn.active {
+                border-color: #9d00ff;
+                background: rgba(157, 0, 255, 0.1);
+            }
             input[type="range"] {
                 cursor: pointer;
+            }
+            /* Custom Cropper Styling inside theme */
+            .cropper-line, .cropper-point {
+                background-color: #9d00ff !important;
+            }
+            .cropper-view-box {
+                outline: 2px solid #9d00ff !important;
+                outline-color: #9d00ff !important;
+            }
+            .cropper-face {
+                background-color: transparent !important;
             }
         </style>
     `;
@@ -202,11 +250,22 @@ export function init(container) {
     const zoomPercent = container.querySelector('#zoom-percent');
     const saveBtn = container.querySelector('#img-save-btn');
 
+    // Controls selectors
+    const applySizeBtn = container.querySelector('#img-apply-size-btn');
+    const widthInput = container.querySelector('#img-width');
+    const heightInput = container.querySelector('#img-height');
+    const constrainCheck = container.querySelector('#img-constrain');
+
+    // Cropper controllers
+    const cropConfirmBtn = container.querySelector('#img-crop-confirm-btn');
+    const cropCancelBtn = container.querySelector('#img-crop-cancel-btn');
+
     let currentImg = null;
     let canvasScale = 1;
     let activeTool = 'arrange';
     let history = [];
     let historyIndex = -1;
+    let cropperInstance = null;
 
     // Load Image
     imgInput.addEventListener('change', (e) => {
@@ -236,6 +295,12 @@ export function init(container) {
         ctx.drawImage(img, 0, 0);
         
         dimDisplay.textContent = `${img.width} x ${img.height} px`;
+
+        if (widthInput && heightInput) {
+            widthInput.value = img.width;
+            heightInput.value = img.height;
+        }
+
         fitToView();
     }
 
@@ -257,19 +322,191 @@ export function init(container) {
         zoomPercent.textContent = Math.round(canvasScale * 100) + '%';
     }
 
-    // Tools Switching
+    // Zoom listeners
+    container.querySelector('#zoom-out').addEventListener('click', () => {
+        canvasScale = Math.max(0.1, canvasScale - 0.1);
+        applyZoom();
+    });
+
+    container.querySelector('#zoom-in').addEventListener('click', () => {
+        canvasScale = Math.min(3, canvasScale + 0.1);
+        applyZoom();
+    });
+
+    // Resize event handles
+    widthInput.addEventListener('input', () => {
+        if (constrainCheck.checked && mainCanvas.width && mainCanvas.height) {
+            const aspect = mainCanvas.width / mainCanvas.height;
+            const w = parseInt(widthInput.value) || 0;
+            if (w > 0) {
+                heightInput.value = Math.round(w / aspect);
+            }
+        }
+    });
+
+    heightInput.addEventListener('input', () => {
+        if (constrainCheck.checked && mainCanvas.width && mainCanvas.height) {
+            const aspect = mainCanvas.width / mainCanvas.height;
+            const h = parseInt(heightInput.value) || 0;
+            if (h > 0) {
+                widthInput.value = Math.round(h * aspect);
+            }
+        }
+    });
+
+    applySizeBtn.addEventListener('click', () => {
+        const targetW = parseInt(widthInput.value) || 0;
+        const targetH = parseInt(heightInput.value) || 0;
+
+        if (targetW <= 0 || targetH <= 0) {
+            alert('Please enter valid width and height dimensions.');
+            return;
+        }
+
+        // Create temporary canvas to hold exact pixel data
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = targetW;
+        tempCanvas.height = targetH;
+        const tempCtx = tempCanvas.getContext('2d');
+
+        // Draw and stretch image
+        tempCtx.drawImage(mainCanvas, 0, 0, targetW, targetH);
+
+        // Update canvas sizing
+        mainCanvas.width = targetW;
+        mainCanvas.height = targetH;
+        uiCanvas.width = targetW;
+        uiCanvas.height = targetH;
+
+        ctx.drawImage(tempCanvas, 0, 0);
+
+        dimDisplay.textContent = `${targetW} x ${targetH} px`;
+        fitToView();
+        saveToHistory();
+    });
+
+    // Clean active Cropper sessions
+    function stopCropper() {
+        if (cropperInstance) {
+            cropperInstance.destroy();
+            cropperInstance = null;
+        }
+        const cropperWrapper = container.querySelector('#cropper-wrapper');
+        if (cropperWrapper) {
+            cropperWrapper.classList.add('hidden');
+        }
+    }
+
+    // Launch active Cropper session
+    function startCropper() {
+        stopCropper();
+
+        const cropperWrapper = container.querySelector('#cropper-wrapper');
+        const cropTargetImg = container.querySelector('#crop-target-img');
+
+        // Extract active pixels as reference
+        cropTargetImg.src = mainCanvas.toDataURL('image/png');
+        cropperWrapper.classList.remove('hidden');
+
+        cropperInstance = new Cropper(cropTargetImg, {
+            aspectRatio: NaN,
+            viewMode: 1,
+            dragMode: "move",
+            background: false,
+            autoCropArea: 0.9,
+            cropBoxMovable: true,
+            cropBoxResizable: true,
+            toggleDragModeOnDblclick: false,
+        });
+
+        // Clear active aspects and set back to Free
+        container.querySelectorAll('.crop-aspect-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.ratio === 'free') {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    // Aspect listeners
+    container.querySelectorAll('.crop-aspect-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            container.querySelectorAll('.crop-aspect-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            if (!cropperInstance) return;
+
+            const ratio = btn.dataset.ratio;
+            if (ratio === 'free') {
+                cropperInstance.setAspectRatio(NaN);
+            } else {
+                cropperInstance.setAspectRatio(parseFloat(ratio));
+            }
+        });
+    });
+
+    // Confirm crop
+    cropConfirmBtn.addEventListener('click', () => {
+        if (!cropperInstance) return;
+
+        const croppedCanvas = cropperInstance.getCroppedCanvas();
+        if (croppedCanvas) {
+            const targetW = croppedCanvas.width;
+            const targetH = croppedCanvas.height;
+
+            mainCanvas.width = targetW;
+            mainCanvas.height = targetH;
+            uiCanvas.width = targetW;
+            uiCanvas.height = targetH;
+
+            ctx.clearRect(0, 0, targetW, targetH);
+            ctx.drawImage(croppedCanvas, 0, 0);
+
+            dimDisplay.textContent = `${targetW} x ${targetH} px`;
+            if (widthInput && heightInput) {
+                widthInput.value = targetW;
+                heightInput.value = targetH;
+            }
+
+            fitToView();
+            saveToHistory();
+        }
+
+        switchToTool('arrange');
+    });
+
+    // Discard crop
+    cropCancelBtn.addEventListener('click', () => {
+        switchToTool('arrange');
+    });
+
+    // Unified transition logic between sidebar modules
+    function switchToTool(tool) {
+        stopCropper();
+
+        container.querySelectorAll('.tool-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.tool === tool) {
+                btn.classList.add('active');
+            }
+        });
+
+        activeTool = tool;
+
+        container.querySelectorAll('#tool-settings-container > div').forEach(div => div.classList.add('hidden'));
+        const settingsPanel = container.querySelector(`#settings-${tool}`);
+        if (settingsPanel) settingsPanel.classList.remove('hidden');
+
+        if (tool === 'crop') {
+            startCropper();
+        }
+    }
+
+    // Tools Switching Wire up
     container.querySelectorAll('.tool-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            container.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
             const tool = btn.dataset.tool;
-            activeTool = tool;
-            
-            // Toggle settings panels
-            container.querySelectorAll('#tool-settings-container > div').forEach(div => div.classList.add('hidden'));
-            const settingsPanel = container.querySelector(`#settings-${tool}`);
-            if (settingsPanel) settingsPanel.classList.remove('hidden');
+            switchToTool(tool);
         });
     });
 
@@ -312,11 +549,8 @@ export function init(container) {
             ctx.arc(x, y, brushRadius, 0, Math.PI * 2);
             ctx.fill();
         } else if (type === 'lasso') {
-            // Magic Wand Mock (Flood fill or simple color removal)
-            // For now, let's just do a "Remove Bg" simulation or precise eraser.
-            // A real flood fill is expensive but good.
             magicWand(Math.round(x), Math.round(y), brushRadius);
-            isDrawing = false; // Wand is a single click
+            isDrawing = false; // Wand is single click
         }
     }
 
@@ -332,7 +566,7 @@ export function init(container) {
         const baseB = data[basePos + 2];
         const baseA = data[basePos + 3];
 
-        if (baseA === 0) return; // Already transparent
+        if (baseA === 0) return; // Transparent boundary
 
         while(stack.length > 0) {
             const [x, y] = stack.pop();
@@ -354,7 +588,7 @@ export function init(container) {
 
             if (diff <= tolerance) {
                 visited[idx] = 1;
-                data[pos + 3] = 0; // Make transparent
+                data[pos + 3] = 0; // Translucent alpha
                 
                 stack.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
             }
@@ -364,12 +598,10 @@ export function init(container) {
     }
 
     container.querySelector('#img-rm-bg')?.addEventListener('click', async () => {
-        // Mock AI Background removal
         alert("Analyzing subject... (AI Model is parsing segments)");
         const imgData = ctx.getImageData(0, 0, mainCanvas.width, mainCanvas.height);
         const data = imgData.data;
         
-        // Simple "remove bright backgrounds" mock
         for (let i = 0; i < data.length; i += 4) {
             if (data[i] > 200 && data[i+1] > 200 && data[i+2] > 200) {
                 data[i+3] = 0;
@@ -379,11 +611,66 @@ export function init(container) {
         saveToHistory();
     });
 
-    // History System
+    // --- Color Adjustments ---
+    const adjustRanges = container.querySelectorAll('.adj-range');
+    
+    adjustRanges.forEach(range => {
+        range.addEventListener('input', () => {
+            const filterType = range.dataset.filter;
+            const value = range.value;
+            
+            // Value display updates
+            if (filterType === 'brightness') {
+                container.querySelector('#bri-val').textContent = value;
+            } else if (filterType === 'contrast') {
+                container.querySelector('#con-val').textContent = value;
+            } else if (filterType === 'saturate') {
+                container.querySelector('#sat-val').textContent = value + '%';
+            }
+            
+            applyAdjustments();
+        });
+        
+        range.addEventListener('change', () => {
+            saveToHistory();
+        });
+    });
+
+    function applyAdjustments() {
+        if (!history[0]) return; // Depends on loaded snapshot
+
+        const bri = container.querySelector('[data-filter="brightness"]')?.value || 0;
+        const con = container.querySelector('[data-filter="contrast"]')?.value || 0;
+        const sat = container.querySelector('[data-filter="saturate"]')?.value || 100;
+
+        const baseState = history[0];
+        
+        mainCanvas.width = baseState.width;
+        mainCanvas.height = baseState.height;
+        ctx.putImageData(baseState.imageData, 0, 0);
+
+        ctx.filter = `brightness(${100 + parseInt(bri)}%) contrast(${100 + parseInt(con)}%) saturate(${sat}%)`;
+        
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = mainCanvas.width;
+        tempCanvas.height = mainCanvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCtx.drawImage(mainCanvas, 0, 0);
+        
+        ctx.filter = 'none';
+        ctx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+        ctx.drawImage(tempCanvas, 0, 0);
+    }
+
+    // --- Elegant History System ---
     function saveToHistory() {
         const snapshot = ctx.getImageData(0, 0, mainCanvas.width, mainCanvas.height);
         history = history.slice(0, historyIndex + 1);
-        history.push(snapshot);
+        history.push({
+            width: mainCanvas.width,
+            height: mainCanvas.height,
+            imageData: snapshot
+        });
         historyIndex++;
         if (history.length > 20) {
             history.shift();
@@ -397,19 +684,39 @@ export function init(container) {
         container.querySelector('#img-redo').disabled = historyIndex >= history.length - 1;
     }
 
+    function restoreFromHistory(step) {
+        const state = history[step];
+        if (!state) return;
+
+        mainCanvas.width = state.width;
+        mainCanvas.height = state.height;
+        uiCanvas.width = state.width;
+        uiCanvas.height = state.height;
+
+        ctx.putImageData(state.imageData, 0, 0);
+
+        dimDisplay.textContent = `${state.width} x ${state.height} px`;
+        
+        if (widthInput && heightInput) {
+            widthInput.value = state.width;
+            heightInput.value = state.height;
+        }
+
+        fitToView();
+        updateHistoryButtons();
+    }
+
     container.querySelector('#img-undo').addEventListener('click', () => {
         if (historyIndex > 0) {
             historyIndex--;
-            ctx.putImageData(history[historyIndex], 0, 0);
-            updateHistoryButtons();
+            restoreFromHistory(historyIndex);
         }
     });
 
     container.querySelector('#img-redo').addEventListener('click', () => {
         if (historyIndex < history.length - 1) {
             historyIndex++;
-            ctx.putImageData(history[historyIndex], 0, 0);
-            updateHistoryButtons();
+            restoreFromHistory(historyIndex);
         }
     });
 

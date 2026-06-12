@@ -2,8 +2,8 @@
   "name": "pro-studio",
   "private": true,
   "description": "Pro Studio - Advanced Media Editing Suite",
-  "author": "GR Studios",
-  "version": "1.0.0",
+  "author": "GR Studios AI",
+  "version": "1.0.3",
   "main": "electron/main.js",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
@@ -14,7 +14,7 @@
     "electron:start": "electron .",
     "electron:pack": "electron-builder --dir",
     "electron:dist": "electron-builder",
-    "build:win": "npm run build && electron-builder --win"
+    "build:win": "node scripts/copy-assets.cjs && npm run build && electron-builder --win"
   },
   "build": {
     "appId": "com.grstudios.prostudio",
@@ -27,12 +27,14 @@
         "nsis",
         "portable"
       ],
-      "icon": "public/icons/favicon.ico"
+      "icon": "public/icons/icon.ico"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true
+      "createDesktopShortcut": true,
+      "installerIcon": "public/icons/icon.ico",
+      "uninstallerIcon": "public/icons/icon.ico"
     },
     "fileAssociations": [
       {
@@ -106,6 +108,7 @@
     "electron": "^42.3.3",
     "electron-builder": "^26.15.2",
     "esbuild": "^0.25.0",
+    "jimp": "^1.6.1",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
